@@ -1,0 +1,470 @@
+###BASH ANNOTATIONS###
+
+echo $0 -> mostra versao do shell
+
+echo $SHELL -> mostra shell com caminho
+
+ tail /etc/passwd -> mostra bash do usuario
+ 
+------------------------
+
+sudo dpkg -l |grep ksh
+sudo apt-get install ksh
+
+ksh: outro shell
+
+(pipeline: cecidilha mais shift)|||
+
+
+
+#######COMANDOS LINUX#########
+
+cd
+ls
+ls -ltr -> ordena domais velho pro mais novo 
+
+ps-> lista os PROCESSOS na maquina
+
+echo -e "col1\tcol2\tcol3"
+col1	col2	col3
+
+CRIAR PASTA NOVA COM ARQUIVO
+
+mkdir -p diretorio3/ex1.txt
+
+REMOVER DIRETORIO
+rm -r diretorio3/ (RECURSIVAMENTE)
+
+
+========================
+MANIPULACAO DE TEXTO
+-----------------------
+
+cat alunos2.txt 
+Andre Gonçalves
+Paulo Freitas
+Maria Antonieto Sousa
+
+Carlos Augusto
+Ana Claudia
+Ana Claudia Vasconcelos
+Rafael dos Santos
+Silvia		 Oliveira
+Antonio       Silva
+Eliseu Padilha
+Ricardo Prudenciato 
+
+-----------
+cat -n alunos2.txt -> enumera linhas mesmo que estajam em branco
+
+1	Andre Gonçalves
+     2	Paulo Freitas
+     3	Maria Antonieto Sousa
+     4	
+     5	Carlos Augusto
+     6	Ana Claudia
+     7	Ana Claudia Vasconcelos
+     8	Rafael dos Santos
+     9	Silvia		 Oliveira
+    10	Antonio       Silva
+    11	Eliseu Padilha
+    12	Ricardo Prudenciato     
+    13	
+    
+    cat -b alunos2.txt -> enumera APENAS LINHAS QUE NAO ESTAO EM BRANCO
+     1	Andre Gonçalves
+     2	Paulo Freitas
+     3	Maria Antonieto Sousa
+
+     4	Carlos Augusto
+     5	Ana Claudia
+     6	Ana Claudia Vasconcelos
+     7	Rafael dos Santos
+     8	Silvia		 Oliveira
+     9	Antonio       Silva
+    10	Eliseu Padilha
+    11	Ricardo Prudenciato  
+    
+    cat -A alunos2.txt -> mostra CARACTERES ESPECIAIS
+    
+Andre GonM-CM-'alves$
+Paulo Freitas$
+Maria Antonieto Sousa$
+$
+Carlos Augusto$
+Ana Claudia$
+Ana Claudia Vasconcelos$
+Rafael dos Santos$
+Silvia^I^I Oliveira$
+Antonio       Silva$
+Eliseu Padilha$
+Ricardo Prudenciato     $
+$
+
+=============
+tac alunos2.txt-> le o contrario
+
+=============
+tail -n10 arquivolongo.txt -> le o fim do arquivo
+
+=============
+head -3 arquivolongo.txt 
+
+================
+head -c3 arquivolongo.txt -> primeiros 3 CARACTERES
+exe
+
+================
+wc alunos2.txt -> conta numero de linhas, palavras e caracteres
+
+13  25 202 alunos2.txt
+
+so linhas: -L
+
+wc -L alunos2.txt 
+13 alunos2.txt
+
+so palavras: -w
+wc -w alunos2.txt 
+25 alunos2.txt
+
+so caracteres: -m ou bites: -c
+
+==============
+wc alunos* -> conta todos os arquivos que comecam com alunos...
+ 13  25 202 alunos2.txt
+  9  10  77 alunos3.txt
+  3  18  87 alunos-temp.txt
+  0   0   0 alunos.txt
+ 25  53 366 total
+ 
+===============
+ JUNTANDO COMANDOS COM |
+ 
+ tail -n5 alunos2.txt |wc -w -> PEGUE AS ULTIMAS 5 LINHAS E CONTE AS PALAVRAS
+ 
+=============
+ORDENAR PELO 3O. CAMPO, SEPARANDO POR ":", considerando os numeros como int e nao strings: 
+
+tail /etc/passwd |sort -k3 -t":" -g
+
+---------------------------
+grep -A3 Carlos alunos2.txt
+
+-------------------------
+SUBSTITUIR PALAVRAS
+
+cat alunos2.txt |sed 's/Paulo/Joao/' 
+
+---------------SUBSTITUIR SO UMA PALAVRA
+echo "Curso Linux Shell Script Linux" | sed "s/Linux/Windows/"
+Curso Windows Shell Script Linux
+vboxuser@Ubuntu:~/Desktop/Estudos/Arquivos-Curso-ShellScript
+
+---------------SUBSTITUIR TODAS AS PALAVRAS
+/CursoShellScript/arquivos$ echo "Curso Linux Shell Script Linux" | sed "s/Linux/Windows/g"
+Curso Windows Shell Script Windows
+
+
+---------------
+MOSTRAR PAGINAS 
+more
+
+more arquivolongo.txt 
+exemplo do ZZ
+
+LPI Linux Essentials
+ooooasfafja
+aoaoaoa
+aaaa
+Show employers that y
+vboxuser@Ubuntu:~/Desktop/Estudos/Arquivos-Curso-ShellScript/CursoShellScript/arquivos$ 
+
+
+
+
+==============
+uniq alunos2.txt -> nao mostra repetido em sequencia...
+
+------------------
+comando less
+
+less arquivolongo.txt 
+
+=--------------------
+ACHAR FILES POR NOME 
+
+find ./ -name alunos.txt
+
+find ../ -name "alunos*"
+
+=====================
+ACHAR VARIOS ARQUIVOS E VER O CAMINHO 
+
+find ./ -name "alunos*" -exec ls -l {} +
+-rw-r--r-- 1 vboxuser vboxuser 202 Sep  1  2017 ./alunos2.txt
+-rw-r--r-- 1 vboxuser vboxuser  77 Sep  1  2017 ./alunos3.txt
+-rw-r--r-- 1 vboxuser vboxuser  87 Sep  1  2017 ./alunos-temp.txt
+-rw-r--r-- 1 vboxuser vboxuser   0 Sep  1  2017 ./alunos.txt
+-rw-rw-r-- 1 vboxuser vboxuser 191 May 18  2017 ./Exercicios/alunos.txt
+
+
+MULTIPLICAR
+
+expr 5 \* 2
+
+ou  
+
+echo "3 * 2" | bc
+===============
+GRAVAR ERRO
+
+ls -l alunos.txt3 2> log.out
+vboxuser@Ubuntu:~/Desktop/Estudos/Arquivos-Curso-ShellScript/CursoShellScript/arquivos$ cat log.out 
+ls: cannot access 'alunos.txt3': No such file or directory
+
+
+==============CRIACAO DE VARIAVEIS NO ENV
+
+vboxuser@Ubuntu:~/Desktop/Estudos/Arquivos-Curso-ShellScript/CursoShellScript/arquivos$ echo $HOME
+/home/vboxuser
+vboxuser@Ubuntu:~/Desktop/Estudos/Arquivos-Curso-ShellScript/CursoShellScript/arquivos$ VARIAVEL1=Valor
+vboxuser@Ubuntu:~/Desktop/Estudos/Arquivos-Curso-ShellScript/CursoShellScript/arquivos$ echo $VARIAVEL1 
+Valor
+vboxuser@Ubuntu:~/Desktop/Estudos/Arquivos-Curso-ShellScript/CursoShellScript/arquivos$ CURSO="Curso de Shell Script"
+vboxuser@Ubuntu:~/Desktop/Estudos/Arquivos-Curso-ShellScript/CursoShellScript/arquivos$ echo $CURSO 
+Curso de Shell Script
+
+==============PID ATUAL
+
+vboxuser@Ubuntu:~/Desktop/Estudos/Arquivos-Curso-ShellScript/CursoShellScript/arquivos$ echo $$
+3154
+vboxuser@Ubuntu:~/Desktop/Estudos/Arquivos-Curso-ShellScript/CursoShellScript/arquivos$ 
+
+==============
+EDITOR VI
+
+ctrl f -> pg depois 
+ctrl b -> pg antes
+
+!wq para sair
+i para inserir testo
+: e numero da linha pra ir direto pra linha, ou 
+:1 pro comeco ou
+:$ pro fim
+
+:!ls /tmp
+
+============Procurar por palavra "Linux":
+
+/Linux
+proximo: n
+Busca de baixo pra cima: N
+
+
+==============Remover UMA linha:
+vai na linha e aperta "DD".
+
+===============Remover 4 linhas:
+D4D
+
+pra colar o removido: P
+
+para copiar: "yy"
+
+
+copiar 5 linhas:
+"y5y"
+
+===========salvar:
+:w
+
+=======sair e salvar:
+:wq
+======mostrar o modo
+:set showmode 
+
+==========SAIR:
+sair e salvar
+
+:x
+:wq
+
+sair SEM salvar 
+:q!
+
+====FILE GLOBBING VS REGEX
+
+achar arquivos 
+ls -la Aula[1-5]
+
+====CRIAR VARIOS ARQUIVOS COM COISA DENTRO
+
+for i in {1..5}; do mkdir -p pasta$i/{src,docs}; echo "console.log('Pasta $i');"> pasta$i/src/main.js; echo "#Documentacao Pasta $i" > pasta$i/docs/README.md; done
+
+=====Retornar tudo que termine em 1 ou 2:
+
+ls -la *[12]
+
+========Procurar um por caracteres
+ls -la *[12] 
+
+=========Procurar por palavras inteiras
+ls -l {Aula,AULA}3
+========Procurar por expressao com 1 de penultima letra e qq coisa por ultimo 
+ls -l Aula1?
+
+
+============EXPRESSOES REGULARES
+
+egrep "[Ll]inux" arquivolongo.txt
+
+================PROCURAR LINHA COMECANDO POR Linux
+egrep -n "^Linux" texto.txt
+
+==============MOSTRAR TUDO MENOS O QUE COMECAR COM #
+ egrep -v -n "^#" texto.txt 
+
+
+===========MOSTRAR TUDO O QUE FINALIZAR COM Linux
+egrep -n "Linux$" texto.txt
+
+===============*ASTERISCO
+QUER DIZER "A LETRA ANTERIOR AO ASTERISCO EXITE NENHUMA OU VARIAS VEZES
+egrep "b[a-i]g*" texto.txt 
+
+O Xubuntu é baseado no Ubuntu
+bag
+bbg
+beg
+big
+beginner
+bigger
+bege
+
+============O CARACTERE ANTERIOR PRECISA APARECER PELO MENOS UMA VEZ
+grep "b[a-i]g+" texto.txt 
+
+============PONTO QUER DIZER QUALQUER QUE SEPARE ESSAS DUAS STRINGS
+egrep "O.Linux" texto.txt 
+
+O Linux
+==========QUALQUER COISA OU NADA ENTRE O O E O Linux
+
+vboxuser@Ubuntu:~/Desktop/Estudos/Arquivos-Curso-ShellScript/CursoShellScript/arquivos/Exercicios$ egrep "O.*Linux" texto.txt 
+O Sistema Operacional Linux
+O Linux
+Origem Linux
+OLinux
+
+
+==============CONSIDERAR O PONTO COMO PONTO MESMO, E NAO COMO QUALQUER CARACTERE 
+
+vboxuser@Ubuntu:~/Desktop/Estudos/Arquivos-Curso-ShellScript/CursoShellScript/arquivos/Exercicios$ egrep "[Ll]inux\." texto.txt
+
+============VI
+=========APARECER O --INSERT--
+:set showmode
+
+====MOSTRAR O SHELL USADO
+
+#!/bin/bash
+
+====COMANDOS VI
+MODO NORMAL
+DIREITA: l
+ESQUERDA: h
+CIMA:K
+BAIXO:J
+
+MODO INSERT
+i
+====adicionar permissao executar
+
+chmod u+x bobScript.sh
+
+chmod 755 arquivo.sh      # rwxr-xr-x (usuário: tudo, grupo/outros: ler+executar)
+chmod 754 arquivo.sh      # rwxr-xr-- (usuário: tudo, grupo: ler+executar, outros: só ler)
+chmod 700 arquivo.sh      # rwx------ (só usuário tem todas permissões)
+chmod 744 arquivo.sh      # rwxr--r-- (usuário: tudo, outros: só ler)
+
+chmod 755 arquivo.sh
+      │││
+      ││└── Outros (others)
+      │└─── Grupo (group)  
+      └──── Usuário (user)
+      
+ 4 = r (read/leitura)
+2 = w (write/escrita)  
+1 = x (execute/execução)
+
+7 = 4+2+1 = rwx (ler, escrever, executar)
+6 = 4+2   = rw- (ler, escrever)
+5 = 4+1   = r-x (ler, executar)
+4 = 4     = r-- (só ler)
+0 = 0     = --- (nenhuma permissão)
+
+=======EXECUTAR O BASH NO MESMO SHELL
+source bobScript.sh 
+OU
+. bobScript.sh	
+
+============executar arquivo ao mesmo tempo que encontra ele
+find . -name "bob" -exec {} \;
+
+=========andar no VIM POR PALAVRAS:
+PRA FRENTE: W
+PRA TRAS: B
+
+continuar escrevendo em uma linha: A
+desfazer: U
+
+visual mode: V
+copiar: Y (yank)
+
+shift+v -> visual com linha no final
+
+=================COLOCAR NUMEROS NA FRENTE
+:set nu rnu
+
+========ver se deu certo ultimo comando 
+
+echo $?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
