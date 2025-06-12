@@ -432,6 +432,24 @@ shift+v -> visual com linha no final
 echo $?
 
 
+====================LER DO USUARIO
+
+read VAR1 VAR2 VAR3
+
+===================escrever o prompt que eu quero junto com o que eu quero que leia:
+
+read -p "Informe seu Curso: " CURSO
+
+================DIGITAR CODIGO OMITIDO NO PROMPT:
+
+echo "digite seu codigo"
+read -s CODIGO
+echo $CODIGO
+
+==================
+parametros para passar com o usuario
+
+
 
 
 
